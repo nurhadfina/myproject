@@ -1,19 +1,22 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Home from "./pages/customer/Home";
-import Shop from "./pages/customer/Shop";
-import ProductDetail from "./pages/customer/ProductDetail";
-import Cart from "./pages/customer/Cart";
-import Checkout from "./pages/customer/Checkout";
+// src/App.jsx
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Home from './pages/customer/Home';
+import Shop from './pages/customer/Shop';
+import Cart from './pages/customer/Cart';
+import AdminDashboard from './pages/admin/AdminDashboard';  // new import
 
 function App() {
   return (
     <Router>
       <Routes>
+        {/* Customer side routes */}
         <Route path="/" element={<Home />} />
         <Route path="/shop" element={<Shop />} />
-        <Route path="/product/:id" element={<ProductDetail />} />
         <Route path="/cart" element={<Cart />} />
-        <Route path="/checkout" element={<Checkout />} />
+        
+        {/* Admin side route */}
+        <Route path="/admin/*" element={<AdminDashboard />} />
       </Routes>
     </Router>
   );
