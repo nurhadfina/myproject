@@ -36,7 +36,7 @@ const products = [
     category: "Herbal",
     price: 9.99,
     shortDescription: "A calming herbal tea known for its relaxing qualities.",
-    imageUrl: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQGQ7J3Z-TJtXXeCCEiBknSEGQIhlXVHPbIAA&s",
+    imageUrl: "https://bonnieplants.com/cdn/shop/products/052022_T118630_202010_Bonnie_Chamomile_ALT_01.jpg?v=1655326422&width=1200",
   },
   {
     id: 5,
@@ -109,7 +109,11 @@ const ProductDetail = () => {
   const sampleProduct = products.find((product) => product.id === parseInt(id, 10));
 
   if (!sampleProduct) {
-    return <div>Product not found</div>;
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <p className="text-xl text-red-600">Product not found</p>
+      </div>
+    );
   }
 
   return (

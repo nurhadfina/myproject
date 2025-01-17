@@ -1,6 +1,36 @@
-import React from "react";
+import React, { useState } from "react";
+
+const products = [
+  { id: 1, name: "Peppermint Tea" },
+  { id: 2, name: "Rooibos Tea" },
+  { id: 3, name: "Ginger Tea" },
+  { id: 4, name: "Chamomile Tea" },
+  { id: 5, name: "Detox Tea" },
+  { id: 6, name: "Green Tea" },
+  { id: 7, name: "Earl Grey Tea" },
+  { id: 8, name: "Hibiscus Tea" },
+  { id: 9, name: "Masala Chai" },
+  { id: 10, name: "Oolong Tea" },
+  { id: 11, name: "White Tea" },
+  { id: 12, name: "Lemongrass Tea" }
+];
 
 const Header = () => {
+  const [searchQuery, setSearchQuery] = useState("");
+  const [filteredProducts, setFilteredProducts] = useState([]);
+
+  // Handle search input change
+  const handleSearch = (event) => {
+    const query = event.target.value;
+    setSearchQuery(query);
+
+    // Filter products based on search query
+    const filtered = products.filter((product) =>
+      product.name.toLowerCase().includes(query.toLowerCase())
+    );
+    setFilteredProducts(filtered);
+  };
+
   return (
     <header className="bg-white shadow sticky top-0 z-50">
       <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-16">
@@ -42,8 +72,10 @@ const Header = () => {
         {/* Right Section: Search & Cart Icons */}
         <div className="flex items-center space-x-4">
           <form className="relative">
-            <input
+          <input
               type="text"
+              value={searchQuery}
+              onChange={handleSearch}
               placeholder="Search product"
               className="border rounded-md py-1 px-2 text-sm"
             />
@@ -53,6 +85,18 @@ const Header = () => {
             >
               🔍
             </button>
+            {/* Display filtered products */}
+            {searchQuery && filteredProducts.length > 0 && (
+              <div className="absolute mt-2 w-full bg-white shadow-md rounded-md max-h-60 overflow-y-auto z-10">
+                <ul>
+                  {filteredProducts.map((product) => (
+                    <li key={product.id} className="px-4 py-2 hover:bg-gray-100">
+                      {product.name}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
           </form>
           <a
             href="/cart"
