@@ -11,7 +11,7 @@ const sampleProduct = {
   description:
     "This tea is known for its bright, herbal flavor and is rich in antioxidants.",
   price: 31.0,
-  imageUrl: "https://via.placeholder.com/400x300?text=Green+Tea",
+  imageUrl: "https://d2jx2rerrg6sh3.cloudfront.net/images/news/ImageForNews_799464_17363588257468830.jpg",
 };
 
 const ProductDetail = () => {
@@ -45,15 +45,15 @@ const ProductDetail = () => {
             <h1 className="text-2xl font-bold text-gray-800 mb-2">
               {sampleProduct.title}
             </h1>
-            <p className="text-gray-500 mb-4">Strong & Energizing | ★★★★☆</p>
+            <p className="text-gray-600 mb-4">Strong & Energizing | ★★★★☆</p>
             <p className="text-gray-700 mb-6">{sampleProduct.description}</p>
             
             {/* Variant Selection (example) */}
             <div className="mb-4">
-              <label className="block text-gray-700 font-medium mb-1">
+              <label className="block text-gray-900 font-medium mb-1">
                 Select Type
               </label>
-              <select className="border rounded px-2 py-1">
+              <select className="border rounded px-2 py-1 text-gray-800">
                 <option>Loose Leaf</option>
                 <option>Tea Bags</option>
               </select>
@@ -66,9 +66,9 @@ const ProductDetail = () => {
                 type="number"
                 defaultValue={1}
                 min="1"
-                className="w-16 border rounded px-2 py-1"
+                className="w-16 border rounded px-2 py-1 text-gray-800"
               />
-              <span className="text-2xl font-semibold text-green-600">
+              <span className="text-2xl font-semibold text-green-700">
                 ${sampleProduct.price}
               </span>
             </div>
@@ -92,7 +92,7 @@ const ProductDetail = () => {
                 title: "Jasmine Green Tea",
                 shortDescription: "A floral twist on green tea.",
                 price: 25.0,
-                imageUrl: "https://via.placeholder.com/300x200?text=Jasmine+Green+Tea",
+                imageUrl: "https://images-prod.healthline.com/hlcmsresource/images/AN_images/jasmine-tea-1296x728-feature.jpg",
               }} 
             />
             {/* ... more ProductCard components */}
