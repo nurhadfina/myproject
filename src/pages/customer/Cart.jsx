@@ -39,7 +39,6 @@ const Cart = () => {
     }
   };
   
-
   const handleUpdateQuantity = async (itemId, newQty) => {
     try {
       await updateCartItemQuantity(itemId, newQty);  // Make PUT request

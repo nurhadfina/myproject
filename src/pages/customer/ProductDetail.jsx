@@ -116,7 +116,21 @@ const ProductDetail = () => {
   const handleAddToCart = async () => {
     try {
       await addToCart(sampleProduct.id, 1);
-      const updatedCart = [...cart, { ...sampleProduct, quantity: 1 }];
+      const existingProductIndex = cart.findIndex(item => item.id === sampleProduct.id);
+  
+      let updatedCart;
+      if (existingProductIndex > -1) {
+        // If product already exists, update quantity
+        updatedCart = cart.map((item, index) =>
+          index === existingProductIndex
+            ? { ...item, quantity: item.quantity + 1 }
+            : item
+        );
+      } else {
+        // Add new product to cart
+        updatedCart = [...cart, { ...sampleProduct, quantity: 1 }];
+      }
+  
       setCart(updatedCart);
       localStorage.setItem("cartItems", JSON.stringify(updatedCart));
       alert(`${sampleProduct.title} has been added to your cart!`);
@@ -125,6 +139,7 @@ const ProductDetail = () => {
       alert("Failed to add the product to your cart. Please try again.");
     }
   };
+  
 
   if (!sampleProduct) {
     return (
