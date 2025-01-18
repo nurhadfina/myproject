@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Home from './pages/customer/Home';
 import Shop from './pages/customer/Shop';
 import Cart from './pages/customer/Cart';
+import ProductDetail from './pages/customer/ProductDetail';
 import AdminDashboard from './pages/admin/AdminDashboard';  // new import
 import Login from './pages/customer/Login'; // Customer login page
 
@@ -17,6 +18,7 @@ function App() {
         <Route path="/shop" element={<Shop />} />
         <Route path="/cart" element={<Cart />} />
         <Route path="/login" element={<Login />} />  {/* Customer login route */}
+        <Route path="/product/:id" element={<ProductDetail />} />
         
         {/* Admin side route */}
         <Route path="/admin/*" element={<AdminDashboard />} />

@@ -11,13 +11,6 @@ const Header = () => {
     navigate("/login");
   };
 
-  const handleAdminLogin = () => {
-    // Navigate to your admin dashboard login or directly to the dashboard
-    // For instance, if /admin handles both login and dashboard
-    // or if you have a dedicated /admin/login route
-    navigate("/admin");
-  };
-
   return (
     <header className="bg-white shadow sticky top-0 z-50">
       <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-16">
@@ -94,3 +87,4 @@ const Header = () => {
 };
 
 export default Header;
+

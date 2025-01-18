@@ -40,9 +40,9 @@ const Footer = () => {
           <div>
             <h3 className="text-lg font-semibold text-gray-700 mb-2">Contact</h3>
             <ul className="text-sm text-gray-600 space-y-1">
-              <li>Phone: (123) 456-7890</li>
+              <li>Phone: (+60) 19-6287192</li>
               <li>Email: support@teashop.com</li>
-              <li>Address: 123 Tea St., Brew City</li>
+              <li>Address: Gelugor, Pulau Pinang</li>
             </ul>
           </div>
         </div>
