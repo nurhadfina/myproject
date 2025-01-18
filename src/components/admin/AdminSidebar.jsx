@@ -5,9 +5,6 @@ import { NavLink } from 'react-router-dom';
 export default function AdminSidebar() {
   return (
     <aside className="w-full md:w-64 bg-lime-400 text-white h-screen shadow-lg">
-      <div className="p-4 text-xl font-bold border-b border-lime-700">
-        Admin Dashboard
-      </div>
       <ul className="py-4">
         <li>
           <NavLink

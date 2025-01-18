@@ -2,11 +2,14 @@
 import React from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import AdminSidebar from '../../components/admin/AdminSidebar';
+import AdminHeader from '../../components/admin/AdminHeader';
 import ProductManagement from './ProductManagement';
 import UserManagement from './UserManagement';
 
 export default function AdminDashboard() {
   return (
+    <div>
+      <AdminHeader />
     <div className="min-h-screen flex bg-blue-50">
       {/* Sidebar */}
       <AdminSidebar />
@@ -20,6 +23,7 @@ export default function AdminDashboard() {
           <Route path="" element={<Navigate to="products" replace />} />
         </Routes>
       </main>
+    </div>
     </div>
   );
 }
