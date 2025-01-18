@@ -110,29 +110,21 @@ const ProductDetail = () => {
   const sampleProduct = products.find((product) => product.id === parseInt(id, 10));
 
   const [cart, setCart] = useState(
-    JSON.parse(localStorage.getItem('cartItems')) || [] // Get cart from localStorage
+    JSON.parse(localStorage.getItem("cartItems")) || [] // Get cart from localStorage
   );
 
   const handleAddToCart = async () => {
     try {
-      // Call the API to add the product to the cart
       await addToCart(sampleProduct.id, 1);
-  
-      // Update the cart state
       const updatedCart = [...cart, { ...sampleProduct, quantity: 1 }];
       setCart(updatedCart);
-  
-      // Save the updated cart to localStorage
-      localStorage.setItem('cartItems', JSON.stringify(updatedCart));
-  
-      // Optionally, show a success message
+      localStorage.setItem("cartItems", JSON.stringify(updatedCart));
       alert(`${sampleProduct.title} has been added to your cart!`);
     } catch (error) {
       console.error("Error adding to cart:", error);
       alert("Failed to add the product to your cart. Please try again.");
     }
   };
-  
 
   if (!sampleProduct) {
     return (
@@ -141,6 +133,11 @@ const ProductDetail = () => {
       </div>
     );
   }
+
+  // Get similar products (exclude the current product)
+  const similarProducts = products.filter(
+    (product) => product.category === sampleProduct.category && product.id !== sampleProduct.id
+  );
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -190,6 +187,18 @@ const ProductDetail = () => {
           </div>
         </div>
       </main>
+
+      {/* Shop Similar Section */}
+      <section className="bg-gray-100 py-8">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-xl font-bold text-gray-800 mb-6">Shop Similar Products</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            {similarProducts.map((product) => (
+              <ProductCard key={product.id} product={product} />
+            ))}
+          </div>
+        </div>
+      </section>
 
       <Footer />
     </div>
