@@ -3,20 +3,28 @@ const BASE_URL = "http://localhost:8080/api/cart";
 
 // POST: Add an item to the cart
 export const addToCart = async (itemId, quantity) => {
-  const response = await fetch(`${BASE_URL}/add`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ itemId, quantity }),
-  });
-  
-  if (!response.ok) {
-    throw new Error("Failed to add item to cart");
-  }
+  try {
+    const response = await fetch(`${BASE_URL}/add`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ itemId, quantity }),
+    });
 
-  return await response.json();
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(errorData.message || "Failed to add item to cart");
+    }
+
+    return await response.json();
+  } catch (error) {
+    console.error("Error in addToCart:", error);
+    throw error;
+  }
 };
+
+
 
 // PUT: Update item quantity
 export const updateCartItemQuantity = async (itemId, quantity) => {
@@ -47,3 +55,4 @@ export const removeItemFromCart = async (itemId) => {
 
   return await response.json();
 };
+

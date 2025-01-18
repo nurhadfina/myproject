@@ -3,15 +3,32 @@ import com.sun.net.httpserver.HttpContext;
 import java.net.InetSocketAddress;
 
 public class CartServer {
-  public static void main(String[] args) throws Exception {
-    // Create a new HTTP server on port 8080
-    HttpServer server = HttpServer.create(new InetSocketAddress(8080), 0);
+  public static void main(String[] args) {
+    int port = args.length > 0 ? Integer.parseInt(args[0]) : 8080; // Configurable port
+    try {
+      // Create a new HTTP server on the specified port
+      HttpServer server = HttpServer.create(new InetSocketAddress(port), 0);
 
-    // Set up context for handling API requests
-    HttpContext context = server.createContext("/api/cart", new CartHandler());
+      // Set up context for handling API requests
+      HttpContext context = server.createContext("/api/cart", new CartHandler());
 
-    // Start the server
-    server.start();
-    System.out.println("Server is running on http://localhost:8080");
+      // Set up a thread pool for handling requests
+      server.setExecutor(java.util.concurrent.Executors.newCachedThreadPool());
+
+      // Start the server
+      server.start();
+      System.out.printf("Server is running on http://localhost:%d%n", port);
+
+      // Add a shutdown hook to stop the server gracefully
+      Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+        System.out.println("Shutting down the server...");
+        server.stop(0);
+        System.out.println("Server stopped.");
+      }));
+
+    } catch (Exception e) {
+      System.err.println("Error starting the server: " + e.getMessage());
+      e.printStackTrace();
+    }
   }
 }

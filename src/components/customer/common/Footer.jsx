@@ -41,14 +41,14 @@ const Footer = () => {
             <h3 className="text-lg font-semibold text-gray-700 mb-2">Contact</h3>
             <ul className="text-sm text-gray-600 space-y-1">
               <li>Phone: (+60) 19-6287192</li>
-              <li>Email: support@teashop.com</li>
+              <li>Email: support@UniTea.com</li>
               <li>Address: Gelugor, Pulau Pinang</li>
             </ul>
           </div>
         </div>
         
         <div className="text-center mt-6 text-sm text-gray-500">
-          © {new Date().getFullYear()} TeaShop - All Rights Reserved
+          © {new Date().getFullYear()} UniTea - All Rights Reserved
         </div>
       </div>
     </footer>
