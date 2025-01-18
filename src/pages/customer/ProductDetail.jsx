@@ -109,9 +109,17 @@ const ProductDetail = () => {
   const { id } = useParams();
   const sampleProduct = products.find((product) => product.id === parseInt(id, 10));
 
+  // Cart state with localStorage fallback
   const [cart, setCart] = useState(
     JSON.parse(localStorage.getItem("cartItems")) || [] // Get cart from localStorage
   );
+
+  // Quantity state for the input field
+  const [quantity, setQuantity] = useState(1);
+
+  const handleQuantityChange = (e) => {
+    setQuantity(parseInt(e.target.value, 10) || 1); // Ensure the quantity is always a positive number
+  };
 
   const handleAddToCart = async () => {
     try {
@@ -133,6 +141,7 @@ const ProductDetail = () => {
   
       setCart(updatedCart);
       localStorage.setItem("cartItems", JSON.stringify(updatedCart));
+
       alert(`${sampleProduct.title} has been added to your cart!`);
     } catch (error) {
       console.error("Error adding to cart:", error);
@@ -184,7 +193,8 @@ const ProductDetail = () => {
               <label className="text-gray-700">Quantity</label>
               <input
                 type="number"
-                defaultValue={1}
+                value={quantity}
+                onChange={handleQuantityChange}
                 min="1"
                 className="w-16 border rounded px-2 py-1 text-gray-800"
               />

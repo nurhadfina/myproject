@@ -4,7 +4,7 @@ import { NavLink } from 'react-router-dom';
 
 export default function AdminSidebar() {
   return (
-    <aside className="w-full md:w-64 bg-lime-400 text-white h-screen shadow-lg">
+    <aside className="w-full md:w-64 bg-gradient-to-b from-pink-500 to-pink-300 text-white h-screen shadow-lg">
       <ul className="py-4">
         <li>
           <NavLink

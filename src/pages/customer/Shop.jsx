@@ -104,18 +104,28 @@ const initialProducts = [
 ];
 
 const Shop = () => {
-  const [products, setProducts] = useState(initialProducts);
   const [selectedCategory, setSelectedCategory] = useState("All");
+  const [sortOption, setSortOption] = useState("none");
+
+  // Filtered products based on the selected category
+  const filteredProducts = selectedCategory === "All"
+    ? initialProducts
+    : initialProducts.filter(product => product.category === selectedCategory);
+
+  // Sorted products based on the selected sort option
+  const sortedProducts = [...filteredProducts].sort((a, b) => {
+    if (sortOption === "price-asc") return a.price - b.price;
+    if (sortOption === "price-desc") return b.price - a.price;
+    if (sortOption === "alphabetical") return a.title.localeCompare(b.title);
+    return 0; // Default: No sorting
+  });
 
   const handleCategoryChange = (event) => {
-    const selected = event.target.value;
-    setSelectedCategory(selected);
+    setSelectedCategory(event.target.value);
+  };
 
-    if (selected === "All") {
-      setProducts(initialProducts);
-    } else {
-      setProducts(initialProducts.filter(product => product.category === selected));
-    }
+  const handleSortChange = (event) => {
+    setSortOption(event.target.value);
   };
 
   return (
@@ -124,11 +134,11 @@ const Shop = () => {
       <Header />
 
       <main className="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-8">
-        {/* Filter / Sort Controls */}
-        <div className="mb-6 flex flex-col sm:flex-row justify-between">
-          {/* Filter bar */}
-          <div>
-            <label className="block text-gray-700 mb-1">Filter by type:</label>
+        {/* Filter and Sort Controls */}
+        <div className="mb-6 flex flex-col sm:flex-row justify-between items-center">
+          {/* Category Filter */}
+          <div className="mb-4 sm:mb-0">
+            <label className="block text-gray-700 mb-1">Filter by category:</label>
             <select
               className="border rounded px-2 py-1"
               value={selectedCategory}
@@ -142,11 +152,45 @@ const Shop = () => {
               <option value="Light">Light</option>
             </select>
           </div>
-          {/* Sort dropdown, etc. */}
+
+          {/* Sort Dropdown */}
+          <div>
+            <label className="block text-gray-700 mb-1">Sort by:</label>
+            <select
+              className="border rounded px-2 py-1"
+              value={sortOption}
+              onChange={handleSortChange}
+            >
+              <option value="none">None</option>
+              <option value="price-asc">Price: Low to High</option>
+              <option value="price-desc">Price: High to Low</option>
+              <option value="alphabetical">Alphabetical</option>
+            </select>
+          </div>
         </div>
 
         {/* Product Grid */}
-        <ProductGrid products={products} />
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+          {sortedProducts.length > 0 ? (
+            sortedProducts.map(product => (
+              <div key={product.id} className="bg-white shadow rounded-lg p-4">
+                <img
+                  src={product.imageUrl}
+                  alt={product.title}
+                  className="w-full h-40 object-cover rounded"
+                />
+                <h2 className="text-lg font-bold mt-2">{product.title}</h2>
+                <p className="text-sm text-gray-600">{product.shortDescription}</p>
+                <p className="text-xl font-semibold text-green-500">${product.price.toFixed(2)}</p>
+                <button className="mt-4 bg-blue-500 text-white py-1 px-3 rounded">
+                  Add to Cart
+                </button>
+              </div>
+            ))
+          ) : (
+            <p>No products found in this category.</p>
+          )}
+        </div>
       </main>
 
       <Footer />

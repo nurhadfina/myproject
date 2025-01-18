@@ -13,12 +13,12 @@ export default function AdminHeader() {
   };
 
   return (
-    <header className="flex items-center justify-between bg-blue-600 text-white p-4">
+    <header className="flex items-center justify-between bg-pink-100 text-gray-800 p-4">
       <h1 className="text-xl font-bold">Admin Dashboard</h1>
       
       <button
         onClick={handleSignOut}
-        className="bg-red-500 px-3 py-1 rounded hover:bg-red-600"
+        className="bg-red-500 px-3 py-1 rounded hover:bg-red-600 text-white"
       >
         Sign Out
       </button>

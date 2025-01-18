@@ -60,12 +60,7 @@ const Header = () => {
           >
             Shop
           </a>
-          <a 
-            href="#" 
-            className="text-gray-700 hover:text-green-600 transition duration-200"
-          >
-            Subscribe
-          </a>
+          
           <a 
             href="#" 
             className="text-gray-700 hover:text-green-600 transition duration-200"
@@ -78,6 +73,7 @@ const Header = () => {
         <div className="flex items-center space-x-4">
           {/* Search Form */}
           <form className="relative">
+
             <input
               type="text"
               value={searchQuery}
