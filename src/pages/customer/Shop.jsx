@@ -182,9 +182,10 @@ const Shop = () => {
                 <h2 className="text-lg font-bold mt-2">{product.title}</h2>
                 <p className="text-sm text-gray-600">{product.shortDescription}</p>
                 <p className="text-xl font-semibold text-green-500">${product.price.toFixed(2)}</p>
-                <button className="mt-4 bg-blue-500 text-white py-1 px-3 rounded">
+                <a className="mt-4 bg-blue-500 text-white py-1 px-3 rounded"
+                href={`/product/${product.id}`}>
                   Add to Cart
-                </button>
+                </a>
               </div>
             ))
           ) : (
