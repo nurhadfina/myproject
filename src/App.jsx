@@ -5,9 +5,9 @@ import Home from './pages/customer/Home';
 import Shop from './pages/customer/Shop';
 import Cart from './pages/customer/Cart';
 import ProductDetail from './pages/customer/ProductDetail';
-import AdminDashboard from './pages/admin/AdminDashboard';  // new import
-import Login from './pages/customer/Login'; // Customer login page
-
+import AdminDashboard from './pages/admin/AdminDashboard';
+import AddProduct from './pages/admin/AddProduct';  // Import AddProduct component
+import Login from './pages/customer/Login';  // Customer login page
 
 function App() {
   return (
@@ -20,8 +20,9 @@ function App() {
         <Route path="/login" element={<Login />} />  {/* Customer login route */}
         <Route path="/product/:id" element={<ProductDetail />} />
         
-        {/* Admin side route */}
+        {/* Admin side routes */}
         <Route path="/admin/*" element={<AdminDashboard />} />
+        <Route path="/admin/add-product" element={<AddProduct />} />  {/* Add route for AddProduct */}
       </Routes>
     </Router>
   );
