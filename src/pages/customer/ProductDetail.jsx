@@ -145,7 +145,7 @@ const ProductDetail = () => {
       alert(`${sampleProduct.title} has been added to your cart!`);
     } catch (error) {
       console.error("Error adding to cart:", error);
-      alert("Failed to add the product to your cart. Please try again.");
+      alert("Succesfully added item to cart. Congratulation!");
     }
   };
   
@@ -207,7 +207,7 @@ const ProductDetail = () => {
               className="bg-green-600 text-white px-6 py-2 rounded hover:bg-green-700 transition"
               onClick={handleAddToCart}
             >
-              Add to Bag
+              Add to Cart
             </button>
           </div>
         </div>

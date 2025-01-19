@@ -21,7 +21,7 @@ public class CartHandler implements HttpHandler {
 
     // Add CORS headers
     exchange.getResponseHeaders().add("Access-Control-Allow-Origin", "*");
-    exchange.getResponseHeaders().add("Access-Control-Allow-Methods", "GET, PUT, DELETE, OPTIONS");
+    exchange.getResponseHeaders().add("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
     exchange.getResponseHeaders().add("Access-Control-Allow-Headers", "Content-Type");
 
     // Handle OPTIONS request
@@ -35,6 +35,14 @@ public class CartHandler implements HttpHandler {
       if (uri.getPath().equals("/api/cart")) {
         response = getCartItems();
         exchange.sendResponseHeaders(200, response.getBytes().length);
+      }
+    } else if ("POST".equals(method)) {
+      if (uri.getPath().equals("/api/cart")) {
+        InputStream requestBody = exchange.getRequestBody();
+        String requestData = new String(requestBody.readAllBytes());
+        addCartItem(requestData);
+        response = getCartItems();
+        exchange.sendResponseHeaders(201, response.getBytes().length); // 201 Created
       }
     } else if ("PUT".equals(method)) {
       if (uri.getPath().equals("/api/cart/update")) {
@@ -74,6 +82,26 @@ public class CartHandler implements HttpHandler {
     }
     sb.append("]");
     return sb.toString();
+  }
+
+  private void addCartItem(String requestData) {
+    String[] parts = requestData.replace("{", "").replace("}", "").split(",");
+    int id = Integer.parseInt(parts[0].split(":")[1].trim());
+    String title = parts[1].split(":")[1].trim().replace("\"", "");
+    double price = Double.parseDouble(parts[2].split(":")[1].trim());
+    int quantity = Integer.parseInt(parts[3].split(":")[1].trim());
+    String imageUrl = parts[4].split(":")[1].trim().replace("\"", "");
+
+    // Check if the item already exists
+    for (CartItem item : cartItems) {
+      if (item.getId() == id) {
+        item.setQuantity(item.getQuantity() + quantity);
+        return;
+      }
+    }
+
+    // Add a new item if it doesn't exist
+    cartItems.add(new CartItem(id, title, price, quantity, imageUrl));
   }
 
   private void updateCartItem(String requestData) {
