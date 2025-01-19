@@ -8,11 +8,6 @@ import java.util.*;
 public class CartHandler implements HttpHandler {
   private static final List<CartItem> cartItems = new ArrayList<>();
 
-  static {
-    cartItems.add(new CartItem(1, "Green Tea", 31.0, 1, "https://example.com/green-tea.jpg"));
-    cartItems.add(new CartItem(2, "Black Coffee", 20.0, 1, "https://example.com/black-coffee.jpg"));
-  }
-
   @Override
   public void handle(HttpExchange exchange) throws IOException {
     String method = exchange.getRequestMethod();
@@ -31,6 +26,7 @@ public class CartHandler implements HttpHandler {
     }
 
     // Handle other methods
+    System.out.println("Received request: " + method + " " + uri.getPath());
     if ("GET".equals(method)) {
       if (uri.getPath().equals("/api/cart")) {
         response = getCartItems();
@@ -40,6 +36,7 @@ public class CartHandler implements HttpHandler {
       if (uri.getPath().equals("/api/cart")) {
         InputStream requestBody = exchange.getRequestBody();
         String requestData = new String(requestBody.readAllBytes());
+        System.out.println("Request data: " + requestData);
         addCartItem(requestData);
         response = getCartItems();
         exchange.sendResponseHeaders(201, response.getBytes().length); // 201 Created
@@ -48,6 +45,7 @@ public class CartHandler implements HttpHandler {
       if (uri.getPath().equals("/api/cart/update")) {
         InputStream requestBody = exchange.getRequestBody();
         String requestData = new String(requestBody.readAllBytes());
+        System.out.println("Request data: " + requestData);
         updateCartItem(requestData);
         response = getCartItems();
         exchange.sendResponseHeaders(200, response.getBytes().length);
@@ -60,12 +58,15 @@ public class CartHandler implements HttpHandler {
         response = getCartItems();
         exchange.sendResponseHeaders(200, response.getBytes().length);
       }
+    } else {
+      exchange.sendResponseHeaders(404, -1); // 404 Not Found for unsupported paths
     }
 
     // Send the response
     try (OutputStream os = exchange.getResponseBody()) {
       os.write(response.getBytes());
     }
+    System.out.println("Response sent: " + response);
   }
 
   private String getCartItems() {

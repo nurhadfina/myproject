@@ -56,7 +56,7 @@ const initialProducts = [
   {
     id: 7,
     title: "Earl Grey Tea",
-    category: "Flavoured",
+    category: "Flavoured",  
     shortDescription: "A bold black tea infused with the citrusy aroma of bergamot.",
     price: 11.49,
     imageUrl: "https://shottbeverages.com/wp-content/uploads/2020/07/Earl_Grey_Tea_Infusion-720x720-c-default.jpg"

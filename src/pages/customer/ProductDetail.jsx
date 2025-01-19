@@ -1,9 +1,9 @@
-import React, { useState } from "react";
-import { useParams } from "react-router-dom";
-import Header from "../../components/customer/common/Header";
-import Footer from "../../components/customer/common/Footer";
-import ProductCard from "../../components/customer/product/ProductCard"; // for "Shop Similar"
-import PromoBanner from "../../components/customer/common/PromoBanner";
+import React, { useState } from "react"; 
+import { useParams, useNavigate } from "react-router-dom"; // Import useNavigate instead of useHistory 
+import Header from "../../components/customer/common/Header"; 
+import Footer from "../../components/customer/common/Footer"; 
+import ProductCard from "../../components/customer/product/ProductCard"; // for "Shop Similar" 
+import PromoBanner from "../../components/customer/common/PromoBanner"; 
 import { addToCart } from '../../api/cartApi';
 
 const products = [
@@ -107,6 +107,7 @@ const products = [
 
 const ProductDetail = () => {
   const { id } = useParams();
+  const navigate = useNavigate(); // Initialize useNavigate
   const sampleProduct = products.find((product) => product.id === parseInt(id, 10));
 
   // Cart state with localStorage fallback
@@ -123,32 +124,32 @@ const ProductDetail = () => {
 
   const handleAddToCart = async () => {
     try {
-      await addToCart(sampleProduct.id, 1);
+      console.log(`Adding to cart: productId=${sampleProduct.id}, quantity=${quantity}`);
+      const newItem = await addToCart(sampleProduct.id, quantity); // Use the correct quantity
       const existingProductIndex = cart.findIndex(item => item.id === sampleProduct.id);
-  
+
       let updatedCart;
       if (existingProductIndex > -1) {
         // If product already exists, update quantity
         updatedCart = cart.map((item, index) =>
           index === existingProductIndex
-            ? { ...item, quantity: item.quantity + 1 }
+            ? { ...item, quantity: item.quantity + quantity } // Add the correct quantity
             : item
         );
       } else {
         // Add new product to cart
-        updatedCart = [...cart, { ...sampleProduct, quantity: 1 }];
+        updatedCart = [...cart, { ...sampleProduct, quantity }];
       }
-  
+
       setCart(updatedCart);
       localStorage.setItem("cartItems", JSON.stringify(updatedCart));
 
       alert(`${sampleProduct.title} has been added to your cart!`);
+      navigate("/cart"); // Navigate to the cart page
     } catch (error) {
       console.error("Error adding to cart:", error);
-      alert("Succesfully added item to cart. Congratulation!");
     }
   };
-  
 
   if (!sampleProduct) {
     return (
